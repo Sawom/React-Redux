@@ -4,8 +4,9 @@
 // 2. create slice. slice connect with store
 // 3. slice connect with store er reducer
 
-import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "./redux/features/counterSlice";
+// import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment, incrementByValue } from "./redux/features/counterSlice";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 
 // ** dispatch
 //  dispatch er jnno 2ta hook ache. 
@@ -14,8 +15,13 @@ import { decrement, increment } from "./redux/features/counterSlice";
 
 
 function App() {
-  const {count} = useSelector((state)=> state.counter )
-  const dispatch = useDispatch();
+  // previous
+  // const {count} = useSelector((state)=> state.counter )
+  // const dispatch = useDispatch();
+
+  // updated. hook theke call korlam type safe er jnno
+  const {count} = useAppSelector((state)=> state.counter )
+  const dispatch = useAppDispatch();
 
 
   return (
@@ -24,11 +30,18 @@ function App() {
         <h2 className="text-2xl font-bold mb-4 text-gray-800">React-Redux Counter</h2>
         <div className="text-4xl font-semibold text-blue-600 mb-6"> {count}  </div>
         <div className="flex space-x-4">
-          
+          {/* increment */}
           <button 
-            onClick={ ()=> dispatch(increment()) }
+            onClick={ ()=> dispatch(increment())}
           className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
             Increment
+          </button>
+
+          {/* increment by 5 */}
+          <button 
+            onClick={ ()=> dispatch(incrementByValue(5)) }
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            Increment by 5
           </button>
 
           <button 
